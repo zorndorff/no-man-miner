@@ -1,0 +1,33 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  system_deps:
+    run: once
+    sources:
+      - ./install.sh
+    cmds:
+      - ./install.sh
+  create_venv:
+    run: once
+    status:
+      - test -d ./venv
+    deps:
+      - task: system_deps
+    cmds:
+      - python3 -m venv venv
+  install_deps:
+    run: once
+    deps:
+      - task: create_venv
+    sources:
+      - requirements.txt
+    cmds:
+      - ./venv/bin/pip install -r requirements.txt
+  default:
+    deps:
+      - task: install_deps
+    cmds:
+      - ./venv/bin/python3 ./src/main.py
+    silent: true
