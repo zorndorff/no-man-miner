@@ -30,4 +30,4 @@ tasks:
       - task: install_deps
     cmds:
       - ./venv/bin/python3 ./src/main.py
-    silent: true
+    silent: false
